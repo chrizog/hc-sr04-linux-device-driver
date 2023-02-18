@@ -1,5 +1,7 @@
 # Linux device driver for HC-SR04 ultrasonic sensor
 
+![HC-SR04 with a RPI](./doc/rpi_hc-sr04.jpg)
+
 This repository contains a Linux device driver for the ultrasonic sensor HC-SR04 implemented as a loadable kernel module. The HC-SR04 has a trigger and an echo pin. After triggering a measurement the sensor will set the echo line to high for a specific time. The high-level time is linear to the measured range. The range can be calculated as follows:
 
 ```bash
@@ -13,6 +15,12 @@ It was tested on Raspberry Pi 3 Model B+, however it should be platform agnostic
 #define GPIO_ECHO  (6)
 ```
 
+## Example wiring with a Raspberry Pi 3 Model B+
+
+The following picture shows an example wiring for the HC-SR04 ultrasonic sensor using a RPI 3 Model B+. The resistors are needed for scaling down the 5V from the Echo pin to 3.3V for the RPI input.
+
+![HC-SR04 with a RPI](./doc/rpi-example-wiring-hc-sr04.png)
+
 ## Reading values from the sensor from a user space app
 
 The linux device driver registers a character device under **/dev/hc-sr04**. A user space application written in Python, C, C++, Go, Bash, etc. can then use the open() and read() syscalls on the **/dev/hc-sr04** character device. When a read() call is issued a measurement is triggered. The range will be returned in millimeters. You need to read 4 bytes (int32) from the device **/dev/hc-sr04**.
@@ -22,7 +30,7 @@ The device driver also takes care that there has to be a minimum time of 60 mill
 
 ## Cross-compiling the kernel module
 
-In a typical embedded development environment, software is cross-compiled on a development host machine, e.g. on a Ubuntu PC. Afterwards the cross-compiled binaries and evtl. config files are transferred to the embedded device (Raspberry Pi).
+In a typical embedded development environment, software is cross-compiled on a development host machine, e.g. on a Ubuntu PC. Afterwards the cross-compiled binaries and eventually config files are transferred to the embedded device (Raspberry Pi).
 
 ### Get Linux kernel headers
 
@@ -53,7 +61,7 @@ cd linux
 git checkout 1.20220830
 ```
 
-3. Now you can cross-compile the Linux kernel in order to obtain the right header files. Dependent on your target architecture (32-bit or 64-bit) the steps might be different. You can follow the instructions on the [Rasperry Pi page](https://www.raspberrypi.com/documentation/computers/linux_kernel.html#cross-compiling-the-kernel).
+3. Now you can cross-compile the Linux kernel in order to obtain the right header files. Dependent on your target architecture (32-bit or 64-bit) the steps might be different. You can follow the instructions on the [Raspberry Pi page](https://www.raspberrypi.com/documentation/computers/linux_kernel.html#cross-compiling-the-kernel).
 
 Example for 32-bit Raspberry Pi 3 Model B+:
 
