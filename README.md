@@ -101,3 +101,32 @@ In case the module was loaded successfully it should appear under the sys logs:
 ```
 sudo dmesg --follow
 ```
+
+## Example consumer apps
+
+There are two example apps for using the Linux device driver from C++ and from Python. Both programs open the file /dev/hc-sr04 first and read 4 bytes from the file afterwards.
+
+**[C++ app](./example_consumer_apps/sample_app.cpp)**:
+
+```bash
+g++ sample_app.cpp -o sample_app
+./sample_app
+```
+
+**[Python app](./example_consumer_apps/sample_app.py)**:
+
+```bash
+python3 sample_app.py
+```
+
+Example output:
+```bash
+Measured range in mm: 287
+Measured range in mm: 283
+Measured range in mm: 198
+Measured range in mm: 132
+Measured range in mm: 83
+Measured range in mm: 73
+Measured range in mm: 85
+...
+```

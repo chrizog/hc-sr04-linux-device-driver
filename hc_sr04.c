@@ -121,8 +121,6 @@ ssize_t hc_sr04_read(struct file *filp, char __user *buf, size_t count, loff_t *
 }
 
 int hc_sr04_open(struct inode *inode, struct file *filp) {
-    pr_info("%s", __func__);
-
     // Allow only one process to open the device at the same time
     if (atomic_inc_and_test(&opened)) {
         return 0;
@@ -133,7 +131,6 @@ int hc_sr04_open(struct inode *inode, struct file *filp) {
 }
 
 int hc_sr04_release(struct inode *inode, struct file *filp) {
-    pr_info("%s\n", __func__);
     atomic_set(&opened, -1);
 	return 0;
 }
